@@ -60,15 +60,26 @@
         <section id="resume" class="section reveal">
             <div class="container">
                 <h2 class="section-title">Resume</h2>
-                <div style="display: flex; justify-content: center;">
-                    <div class="cert-card" style="max-width: 400px; width: 100%;">
-                        <a href="resume.jpg" target="_blank" title="View Full Resume">
-                            <img src="resume.jpg" alt="Sai Vatsal Resume" class="cert-img-placeholder" style="object-fit: cover; width: 100%; display: block; height: 250px; object-position: top;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+                    <div class="cert-card" style="max-width: 460px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-radius: var(--border-radius); overflow: hidden; background: var(--surface-color);">
+                        <a href="resume.jpg" target="_blank" title="Click to open full size" style="display: block; position: relative; background: #ffffff; padding: 4px;">
+                            <img src="resume.jpg" alt="Polimera Sai Vatsal Resume" style="width: 100%; height: auto; display: block; border-radius: 6px; transition: transform 0.25s ease;">
                         </a>
-                        <div class="cert-info">
-                            <h4>Polimera Sai Vatsal</h4>
-                            <p>Resume</p>
-                            <p style="font-size: 0.8rem; margin-top: 5px; color: var(--text-muted);">Click to view full size.</p>
+                        <div class="cert-info" style="display: flex; flex-direction: column; gap: 1rem; padding: 1.25rem;">
+                            <div>
+                                <h4 style="font-size: 1.15rem; margin-bottom: 0.25rem;">Polimera Sai Vatsal</h4>
+                                <p style="font-size: 0.85rem; color: var(--text-muted);">Updated Resume • ECE, KL University</p>
+                            </div>
+                            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                                <a href="resume.pdf" download="Polimera_Sai_Vatsal_Resume.pdf" class="btn btn-primary" style="flex: 1; text-align: center; font-size: 0.9rem; padding: 0.65rem 1rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    Download PDF
+                                </a>
+                                <a href="resume.jpg" target="_blank" class="btn btn-secondary" style="flex: 1; text-align: center; font-size: 0.9rem; padding: 0.65rem 1rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                    View Full Size
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -133,6 +144,16 @@
             <div class="container">
                 <h2 class="section-title">Certifications</h2>
                 <div class="cert-grid">
+                    <div class="cert-card">
+                        <a href="meta_frontend.png" target="_blank" title="View Full Certificate">
+                            <img src="meta_frontend.png" alt="Introduction to Front-End Development - Meta" class="cert-img-placeholder" style="object-fit: cover; width: 100%; display: block;">
+                        </a>
+                        <div class="cert-info">
+                            <h4>Introduction to Front-End Development</h4>
+                            <p>Meta / Coursera</p>
+                            <p style="font-size: 0.8rem; margin-top: 5px; color: var(--text-muted);">Completed foundational course on front-end web development authorized by Meta.</p>
+                        </div>
+                    </div>
                     <div class="cert-card">
                         <a href="hackerrank.png" target="_blank" title="View Full Certificate">
                             <img src="hackerrank.png" alt="HackerRank Cert" class="cert-img-placeholder" style="object-fit: cover; width: 100%; display: block;">
@@ -224,17 +245,19 @@
                 <div class="projects-grid">
                     <!-- Featured Project -->
                     <div class="project-card featured">
-                        <img src="project1.png" alt="AI Agent Interface" class="project-img" style="width: 100%; height: 100%; object-fit: cover; min-height: 300px;">
+                        <a href="https://github.com/SaiVatsal/Ex-GirlFriend" target="_blank" title="View AI Personal Assistant on GitHub" style="display: block; overflow: hidden;">
+                            <img src="project1.png" alt="AI Agent Interface" class="project-img" style="width: 100%; height: 100%; object-fit: cover; min-height: 300px; transition: transform 0.3s ease;">
+                        </a>
                         <div class="project-info">
                             <span class="badge featured-badge">Featured</span>
-                            <h3>AI Personal Assistant</h3>
+                            <h3><a href="https://github.com/SaiVatsal/Ex-GirlFriend" target="_blank" style="color: inherit; text-decoration: none;">AI Personal Assistant</a></h3>
                             <p class="problem"><strong>Problem:</strong> Managing complex daily routines and information overload manually.</p>
                             <p class="solution"><strong>Solution:</strong> An interactive assistant that provides suggestions and automates tasks based on user input.</p>
                             <div class="tech-stack">
                                 <span>Python</span>
                                 <span>API</span>
                             </div>
-                            <a href="https://github.com/SaiVatsal/Project-April" target="_blank" class="project-link">View Project &rarr;</a>
+                            <a href="https://github.com/SaiVatsal/Ex-GirlFriend" target="_blank" class="project-link">View Project &rarr;</a>
                         </div>
                     </div>
 
@@ -266,7 +289,7 @@
                 <div class="contact-wrapper">
                     <div class="contact-info">
                         <p>Feel free to reach out if you're looking for a driven student developer, have a question, or just want to connect.</p>
-                        <a href="mailto:sai1327y@gmail.com" class="contact-email">sai1327y@gmail.com</a>
+                        <a href="mailto:polimerasaivatsal@gmail.com" class="contact-email">polimerasaivatsal@gmail.com</a>
                     </div>
                     <form class="contact-form" id="contact-form">
                         <input type="text" id="contact-name" placeholder="Name" required>

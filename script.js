@@ -145,37 +145,49 @@ document.addEventListener('DOMContentLoaded', () => {
         yearSpan.textContent = new Date().getFullYear();
     }
 
-    // 8. Form Submission Handling
+    // 8. Form Submission Handling - Redirect to Gmail with pre-filled details
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         const statusMsg = document.getElementById('contact-form-status');
         const submitBtn = document.getElementById('contact-submit');
+        const nameInput = document.getElementById('contact-name');
+        const emailInput = document.getElementById('contact-email');
+        const messageInput = document.getElementById('contact-message');
 
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
-            // Mock a loading state
-            const originalBtnText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
+
+            const name = nameInput ? nameInput.value.trim() : '';
+            const senderEmail = emailInput ? emailInput.value.trim() : '';
+            const message = messageInput ? messageInput.value.trim() : '';
+
+            const recipient = 'polimerasaivatsal@gmail.com';
+            const subject = `Portfolio Inquiry from ${name}`;
+            const body = `Hi Sai Vatsal,\n\nName: ${name}\nEmail: ${senderEmail}\n\nMessage:\n${message}\n`;
+
+            // Gmail Web Compose URL (opens Gmail with user's account logged in)
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            submitBtn.textContent = 'Redirecting to Gmail...';
             submitBtn.disabled = true;
-            statusMsg.style.display = 'none';
 
-            // Simulate an API call / submission delay
+            statusMsg.textContent = 'Opening your Gmail with all details pre-filled...';
+            statusMsg.style.color = '#38bdf8';
+            statusMsg.style.display = 'block';
+
+            // Open Gmail compose directly in a new tab
+            const newWindow = window.open(gmailUrl, '_blank');
+            if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+                // If popups are blocked by browser, redirect current window
+                window.location.href = gmailUrl;
+            }
+
             setTimeout(() => {
-                submitBtn.textContent = originalBtnText;
+                submitBtn.textContent = 'Send Message';
                 submitBtn.disabled = false;
-                
-                // Show success state and reset form
-                contactForm.reset();
-                statusMsg.textContent = 'Message sent successfully! I will get back to you soon.';
-                statusMsg.style.color = '#34d399'; // subtle green matching dark theme
-                statusMsg.style.display = 'block';
-
-                // Hide message after a while
-                setTimeout(() => {
-                    statusMsg.style.display = 'none';
-                }, 5000);
-            }, 1500);
+                statusMsg.textContent = 'Redirected to Gmail! Review your message and click Send in Gmail.';
+                statusMsg.style.color = '#34d399';
+            }, 1200);
         });
     }
 

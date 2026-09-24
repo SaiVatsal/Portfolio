@@ -497,31 +497,96 @@ a:hover {
 /* Experiment Zone */
 .experiment-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: var(--spacing-md);
 }
 
 .exp-card {
     background: var(--surface-color);
-    padding: var(--spacing-md);
+    padding: 1.25rem;
     border-radius: var(--border-radius);
     border: 1px dashed var(--border-color);
     transition: var(--transition);
-    cursor: default;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
 }
 
 .exp-card:hover {
-    border-color: var(--text-muted);
-    background: #253347;
+    border-color: var(--accent-color);
+    border-style: solid;
+    background: #1e293b;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(56, 189, 248, 0.15);
+}
+
+.exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
 }
 
 .exp-card h4 {
     font-size: 1rem;
-    margin-bottom: 0.5rem;
+    color: var(--text-main);
+    word-break: break-word;
+    line-height: 1.3;
+}
+
+.exp-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(234, 179, 8, 0.15);
+    color: #facc15;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    white-space: nowrap;
+    border: 1px solid rgba(234, 179, 8, 0.25);
 }
 
 .exp-card p {
     font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+    flex-grow: 1;
+}
+
+.exp-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    margin-top: auto;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.exp-lang {
+    background: #0f172a;
+    color: var(--accent-color);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.exp-link-icon {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.exp-card:hover .exp-link-icon {
+    color: var(--accent-color);
+    transform: translateX(4px);
 }
 
 /* Resources */

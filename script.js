@@ -178,4 +178,133 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1500);
         });
     }
+
+    // 9. Experiment Zone: More Projects (Highest Stars First)
+    const moreProjectsBtn = document.getElementById('more-projects-btn');
+    const moreProjectsBtnText = document.getElementById('more-projects-btn-text');
+    const moreProjectsIcon = document.getElementById('more-projects-icon');
+    const experimentGrid = document.getElementById('experiment-grid');
+    const repoFilterWrapper = document.getElementById('repo-filter-wrapper');
+    const repoSearchInput = document.getElementById('repo-search-input');
+
+    if (moreProjectsBtn && experimentGrid) {
+        let isExpanded = false;
+        let allProjects = [];
+
+        if (typeof githubProjects !== 'undefined' && Array.isArray(githubProjects)) {
+            allProjects = [...githubProjects];
+        }
+
+        // Sort by highest stars descending
+        allProjects.sort((a, b) => (b.stars || 0) - (a.stars || 0));
+
+        // Background update from GitHub API if network is available
+        fetch('https://api.github.com/users/SaiVatsal/repos?per_page=100')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data && Array.isArray(data)) {
+                    allProjects = data.map(r => ({
+                        name: r.name,
+                        stars: r.stargazers_count || 0,
+                        forks: r.forks_count || 0,
+                        lang: r.language || 'Code',
+                        desc: r.description ? (r.description.length > 130 ? r.description.substring(0, 127) + '...' : r.description) : 'Open source repository by Sai Vatsal.',
+                        url: r.html_url
+                    })).sort((a, b) => (b.stars || 0) - (a.stars || 0));
+
+                    if (isExpanded) {
+                        renderProjects(getFilteredProjects());
+                    }
+                }
+            })
+            .catch(() => {});
+
+        const initialCardsHTML = experimentGrid.innerHTML;
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function createProjectCard(project) {
+            const card = document.createElement('a');
+            card.href = project.url;
+            card.target = '_blank';
+            card.rel = 'noopener noreferrer';
+            card.className = 'exp-card';
+            card.title = `View ${project.name} on GitHub`;
+            card.innerHTML = `
+                <div class="exp-header">
+                    <h4>${escapeHTML(project.name)}</h4>
+                    <span class="exp-stars">⭐ ${project.stars}</span>
+                </div>
+                <p>${escapeHTML(project.desc)}</p>
+                <div class="exp-footer">
+                    <span class="exp-lang">${escapeHTML(project.lang)}</span>
+                    <span class="exp-link-icon">&rarr;</span>
+                </div>
+            `;
+            return card;
+        }
+
+        function renderProjects(projectsList) {
+            experimentGrid.innerHTML = '';
+            if (projectsList.length === 0) {
+                const searchVal = repoSearchInput ? repoSearchInput.value : '';
+                experimentGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 2.5rem 1rem; color: var(--text-muted); background: var(--surface-color); border-radius: var(--border-radius); border: 1px dashed var(--border-color);">
+                        <p style="margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--text-main);">No matching projects found</p>
+                        <p style="font-size: 0.9rem;">No repositories matching "<strong>${escapeHTML(searchVal)}</strong>". Try another keyword like Python, bot, or web.</p>
+                    </div>
+                `;
+                return;
+            }
+            projectsList.forEach(p => {
+                experimentGrid.appendChild(createProjectCard(p));
+            });
+        }
+
+        function getFilteredProjects() {
+            if (!repoSearchInput || !repoSearchInput.value.trim()) {
+                return allProjects;
+            }
+            const query = repoSearchInput.value.toLowerCase().trim();
+            return allProjects.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                (p.desc && p.desc.toLowerCase().includes(query)) ||
+                (p.lang && p.lang.toLowerCase().includes(query))
+            );
+        }
+
+        moreProjectsBtn.addEventListener('click', () => {
+            if (!isExpanded) {
+                isExpanded = true;
+                if (repoFilterWrapper) repoFilterWrapper.style.display = 'block';
+                if (moreProjectsBtnText) moreProjectsBtnText.textContent = 'Show Less';
+                if (moreProjectsIcon) moreProjectsIcon.innerHTML = '<path d="M12 19V5M5 12l7-7 7 7"/>';
+                renderProjects(getFilteredProjects());
+            } else {
+                isExpanded = false;
+                if (repoFilterWrapper) {
+                    repoFilterWrapper.style.display = 'none';
+                    if (repoSearchInput) repoSearchInput.value = '';
+                }
+                if (moreProjectsBtnText) moreProjectsBtnText.textContent = 'More Projects (Highest Stars)';
+                if (moreProjectsIcon) moreProjectsIcon.innerHTML = '<path d="M12 5v14M5 12l7 7 7-7"/>';
+                experimentGrid.innerHTML = initialCardsHTML;
+            }
+        });
+
+        if (repoSearchInput) {
+            repoSearchInput.addEventListener('input', () => {
+                if (isExpanded) {
+                    renderProjects(getFilteredProjects());
+                }
+            });
+        }
+    }
 });
